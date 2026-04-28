@@ -1,11 +1,12 @@
-package com.bibliotech;
+package app;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import modelo.Biblioteca;
 
 /**
  * Clase principal con el menú de la aplicación.
- * 
+ *
  * @Author Andrés Rosado
  */
 public class EjercicioBiblioteca {
@@ -44,9 +45,9 @@ public class EjercicioBiblioteca {
 			opcion = mostrarMenu();
 			switch (opcion) {
 			case 1:
-				if (miBiblio != null)
+				if (miBiblio != null) {
 					System.out.println("Ya existe una biblioteca activa.");
-				else {
+				} else {
 					System.out.println("Introduce nombre de la biblioteca:");
 					String nom = teclado.nextLine();
 					miBiblio = new Biblioteca(nom);
@@ -61,15 +62,17 @@ public class EjercicioBiblioteca {
 				do {
 					System.out.println("Introduce ISBN:");
 					isbn = teclado.nextLine();
-					if (miBiblio.existeLibro(isbn))
+					if (miBiblio.existeLibro(isbn)) {
 						System.out.println("ISBN duplicado.");
+					}
 				} while (miBiblio.existeLibro(isbn));
 				System.out.println("Introduce título:");
 				titulo = teclado.nextLine();
 				System.out.println("Introduce autor:");
 				autor = teclado.nextLine();
-				if (miBiblio.agregarLibro(isbn, titulo, autor))
+				if (miBiblio.agregarLibro(isbn, titulo, autor)) {
 					System.out.println("Libro agregado correctamente.");
+				}
 				break;
 			case 3:
 				if (miBiblio == null) {
@@ -77,8 +80,9 @@ public class EjercicioBiblioteca {
 					break;
 				}
 				String codigo = pedirISBN(miBiblio);
-				if (miBiblio.existeLibro(codigo))
+				if (miBiblio.existeLibro(codigo)) {
 					miBiblio.prestarLibro(codigo);
+				}
 				break;
 			case 4:
 				if (miBiblio == null) {
@@ -86,8 +90,9 @@ public class EjercicioBiblioteca {
 					break;
 				}
 				String codigoDev = pedirISBN(miBiblio);
-				if (miBiblio.existeLibro(codigoDev))
+				if (miBiblio.existeLibro(codigoDev)) {
 					miBiblio.devolverLibro(codigoDev);
+				}
 				break;
 			case 5:
 				if (miBiblio == null) {
