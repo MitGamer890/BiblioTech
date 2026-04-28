@@ -13,23 +13,25 @@ import java.io.Serializable;
  * @Author Andrés Rosado
  */
 public class Biblioteca implements Serializable {
+	private static final String ERROR_ACCEDER = "Error crítico al acceder al catálogo";
 	private static final long serialVersionUID = 1L;
 	private String nombreBiblio;
 	private final Libro[] catalogo;
-	private int NumLibros;
-	private static final int MAX_Libros = 100;
+	private int numLibros;
+	private static final int MAX_LIBROS = 100;
+
 
 	public Biblioteca(final String nombre) {
 		this.nombreBiblio = nombre;
-		catalogo = new Libro[MAX_Libros];
-		this.NumLibros = 0;
+		catalogo = new Libro[MAX_LIBROS];
+		this.numLibros = 0;
 	}
 
 	public void guardarEstado(final String ruta) throws IOException {
 		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(ruta))) {
 			out.writeObject(this);
 		} catch (final IOException e) {
-			throw new IOException("Error crítico al acceder al catálogo"); // Literal repetido
+			throw new IOException(ERROR_ACCEDER); // Literal repetido
 		}
 	}
 
@@ -37,16 +39,16 @@ public class Biblioteca implements Serializable {
 		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(ruta))) {
 			return (Biblioteca) in.readObject();
 		} catch (final IOException e) {
-			throw new IOException("Error crítico al acceder al catálogo"); // Literal repetido
+			throw new IOException(ERROR_ACCEDER); // Literal repetido
 		}
 	}
 
 	public boolean agregarLibro(final String isbn, final String titulo, final String autor) {
-		if (this.NumLibros >= MAX_Libros) {
+		if (this.numLibros >= MAX_LIBROS) {
 			return false;
 		}
-		this.catalogo[NumLibros] = new Libro(isbn, titulo, autor);
-		NumLibros++;
+		this.catalogo[numLibros] = new Libro(isbn, titulo, autor);
+		numLibros++;
 		return true;
 	}
 
@@ -69,7 +71,7 @@ public class Biblioteca implements Serializable {
 	}
 
 	private Libro buscarPorISBN(final String isbn) {
-		for (int i = 0; i < this.NumLibros; i++) {
+		for (int i = 0; i < this.numLibros; i++) {
 			if (catalogo[i].getIsbn().equals(isbn)) {
 				return catalogo[i];
 			}
@@ -79,7 +81,7 @@ public class Biblioteca implements Serializable {
 
 	public String mostrarCatalogo() {
 		final StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < this.NumLibros; i++) {
+		for (int i = 0; i < this.numLibros; i++) {
 			sb.append(catalogo[i].toString()).append("\n");
 		}
 		return sb.toString();
