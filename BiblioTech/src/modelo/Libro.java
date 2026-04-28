@@ -7,7 +7,7 @@ import java.io.Serializable;
  * 
  * @Author Andrés Rosado
  */
-public class Libro implements Serializable {
+public class Libro implements Serializable, Prestable {
 
 	private String isbn;
 	private String titulo;
@@ -21,10 +21,12 @@ public class Libro implements Serializable {
 		this.setPrestado(false);
 	}
 
+	@Override
 	public void prestar() {
 		this.setPrestado(true);
 	}
 
+	@Override
 	public void devolver() {
 		this.setPrestado(false);
 	}
